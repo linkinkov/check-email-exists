@@ -3,16 +3,18 @@ extern crate neon;
 extern crate neon_serde;
 extern crate tokio;
 
-use check_if_email_exists::email_exists;
+use check_if_email_exists::{check_email, CheckEmailInput};
 use neon::prelude::*;
 use serde_json;
 use tokio::runtime::Runtime;
 
 // core fn , async check email return String
 fn check_email_exists(to_email: &str, from_email: &str) -> String {
+    let input = CheckEmailInput::new(vec![(&to_email).to_string(), "someone@gmail.com".into()]);
+
     let result = Runtime::new()
         .unwrap()
-        .block_on(email_exists(&to_email, &from_email));
+        .block_on(check_email(&input));
 
     let ret = match serde_json::to_string_pretty(&result) {
         Ok(output) => output,
@@ -35,9 +37,11 @@ fn check_email_exists_sync(mut cx: FunctionContext) -> JsResult<JsValue> {
         None => String::from("user@example.org"),
     };
 
+    let input = CheckEmailInput::new(vec![(&to_email).to_string()]);
+
     let result = Runtime::new()
         .unwrap()
-        .block_on(email_exists(&to_email, &from_email));
+        .block_on(check_email(&input));
 
     let js_value = neon_serde::to_value(&mut cx, &result)?;
     Ok(js_value)

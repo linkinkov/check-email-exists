@@ -23,13 +23,12 @@
     "test": "jest"
   },
   "dependencies": {
-    "neon-cli": "^0.4.0",
-    "node-pre-gyp": "github:amilajack/node-pre-gyp#neon-compat",
+    "neon-cli": "^0.8.0",
+    "@mapbox/node-pre-gyp": "github:amilajack/node-pre-gyp#neon-compat",
     "node-pre-gyp-github": "^1.4.3"
   },
   "binary": {
     "module_name": "index",
-    "host": "https://github.com/ZiNai/check-email-exists/releases/download/",
     "remote_path": "{version}",
     "package_name": "{node_abi}-{platform}-{arch}.tar.gz",
     "module_path": "./native",

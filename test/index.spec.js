@@ -7,7 +7,8 @@ describe("basic", () => {
 
   it("works with async/await", async () => {
     // expect.hasAssertions(2);
-    const data = await addon.checkEmailExists("someone@gmail.com");
+    const data = await addon.checkEmailExists('me@linkinkov.ru');
+    console.log(data);
     expect(typeof data).toEqual("object");
     expect(data.smtp.is_deliverable).toEqual(false);
   });
